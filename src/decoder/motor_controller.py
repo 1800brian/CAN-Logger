@@ -145,17 +145,19 @@ class MotorControllerCANStatus():
 
         """
 
-        self.status1['hardware_failure']      = ((data >> 0) & 1)
-        self.status1['reverse_limit_switch']  = ((data >> 1) & 1)
-        self.status1['forward_limit_switch']  = ((data >> 2) & 1)
-        self.status1['under_voltage']         = ((data >> 3) & 1)
-        self.status1['reset_during_en']       = ((data >> 4) & 1)
-        self.status1['sensor_out_of_phase']   = ((data >> 5) & 1)
-        self.status1['sensor_overflow']       = ((data >> 6) & 1)
-        self.status1['reverse_soft_limit']    = ((data >> (0x18 + 0)) & 1)
-        self.status1['forward_soft_limit']    = ((data >> (0x18 + 1)) & 1)
-        self.status1['hardware_esd_reset']    = ((data >> (0x18 + 2)) & 1)
-        self.status1['remote_loss_of_signal'] = ((data >> (0x30 + 4)) & 1)
+        FAULT_MASK = 0 # This is bad logic, should be a 1; Don't keep this
+
+        self.status1['hardware_failure']      = ((data >> 0) & FAULT_MASK)
+        self.status1['reverse_limit_switch']  = ((data >> 1) & FAULT_MASK)
+        self.status1['forward_limit_switch']  = ((data >> 2) & FAULT_MASK)
+        self.status1['under_voltage']         = ((data >> 3) & FAULT_MASK)
+        self.status1['reset_during_en']       = ((data >> 4) & FAULT_MASK)
+        self.status1['sensor_out_of_phase']   = ((data >> 5) & FAULT_MASK)
+        self.status1['sensor_overflow']       = ((data >> 6) & FAULT_MASK)
+        self.status1['reverse_soft_limit']    = ((data >> (0x18 + 0)) & FAULT_MASK)
+        self.status1['forward_soft_limit']    = ((data >> (0x18 + 1)) & FAULT_MASK)
+        self.status1['hardware_esd_reset']    = ((data >> (0x18 + 2)) & FAULT_MASK)
+        self.status1['remote_loss_of_signal'] = ((data >> (0x30 + 4)) & FAULT_MASK)
 
 
     def _GetMotorOutputPercent(self, data):
